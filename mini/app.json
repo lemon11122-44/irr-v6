@@ -1,0 +1,18 @@
+{
+  "pages": ["pages/home/home", "pages/check/check", "pages/kf/kf"],
+  "window": {
+    "navigationStyle": "custom",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#1677FF",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "list": [
+      {"pagePath": "pages/home/home", "iconPath": "imgs/h.png", "selectedIconPath": "imgs/ha.png", "text": "首页"},
+      {"pagePath": "pages/check/check", "iconPath": "imgs/c.png", "selectedIconPath": "imgs/ca.png", "text": "扣费自查"}
+    ]
+  }
+}

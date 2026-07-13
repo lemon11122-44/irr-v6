@@ -1,0 +1,61 @@
+<view class="pg">
+  <view class="bar"><view class="bl"><view class="lg">%</view><text class="tt">IRR计算器</text></view>
+    <view class="br"><view class="cp"><text class="ci">···</text><text class="cd"></text><text class="ci">☎</text></view></view>
+  </view>
+
+  <!-- 模式选择 -->
+  <view class="mt">
+    <view class="mtb {{mode=='debx'?'on':''}}" data-mode="debx" bind:tap="switchMode">等额本息</view>
+    <view class="mtb {{mode=='debj'?'on':''}}" data-mode="debj" bind:tap="switchMode">等额本金</view>
+  </view>
+
+  <!-- 输入表单 -->
+  <view class="fm">
+    <view class="fi"><text class="fl">借款金额（元）</text><input type="digit" value="{{principal}}" data-field="principal" bindinput="onInput" placeholder="请输入借款金额" /></view>
+    <view class="fi">
+      <view class="rtgl" bind:tap="switchRateMode">
+        <text class="rti {{rateMode=='rate'?'on':''}}">已知年利率</text>
+        <text class="rti {{rateMode=='total'?'on':''}}">一共还了多少钱</text>
+      </view>
+    </view>
+    <view class="fi" wx:if="{{rateMode=='rate'}}"><text class="fl">年利率（%）</text><input type="digit" value="{{inputVal}}" data-field="inputVal" bindinput="onInput" placeholder="如 36" /></view>
+    <view class="fi" wx:if="{{rateMode=='total'}}"><text class="fl">一共还了多少（元）</text><input type="digit" value="{{inputVal}}" data-field="inputVal" bindinput="onInput" placeholder="本息合计总金额" /></view>
+    <view class="fi"><text class="fl">分期期数（月）</text><input type="digit" value="{{months}}" data-field="months" bindinput="onInput" placeholder="如 12" /></view>
+    <button class="calc-btn" bind:tap="calc">开始测算</button>
+  </view>
+
+  <!-- 结果 -->
+  <view class="rs" wx:if="{{showResult && result}}">
+    <view class="rt">{{modeNames[mode]}}测算结果</view>
+    <view class="rg rg1">
+      <view class="ri" wx:if="{{result.monthlyPmt}}"><text class="rk">每月还款</text><text class="rv">{{result.monthlyPmt}}元</text></view>
+      <view class="ri" wx:if="{{result.firstPmt}}"><text class="rk">首月还款</text><text class="rv">{{result.firstPmt}}元</text></view>
+      <view class="ri" wx:if="{{result.lastPmt}}"><text class="rk">末月还款</text><text class="rv">{{result.lastPmt}}元</text></view>
+      <view class="ri"><text class="rk">总利息</text><text class="rv">{{result.totalInterest}}元</text></view>
+      <view class="ri"><text class="rk">本息合计</text><text class="rv">{{result.totalRepay}}元</text></view>
+      <view class="ri" wx:if="{{result.annualIRR}}"><text class="rk">反推年利率</text><text class="rv hv">{{result.annualIRR}}%</text></view>
+    </view>
+    <view class="rg rg2" wx:if="{{result.excessOver24!==undefined}}">
+      <view class="rg-title">⚖️ 法定利率判断</view>
+      <view class="ri"><text class="rk">24%上限利息</text><text class="rv">{{result.interestAt24}}元</text></view>
+      <view class="ri" wx:if="{{result.excessOver24>0}}"><text class="rk">超出24%金额</text><text class="rv hv">{{result.excessOver24}}元</text></view>
+      <view class="ri" wx:if="{{result.excessOver24>0}}"><text class="rk">💰 可退金额</text><text class="rv hv">{{result.excessOver24}}元</text></view>
+      <view class="ri" wx:if="{{result.excessOver24>0}}" bind:tap="onKfTap" hover-class="gh"><text class="rk"></text><text class="rv" style="color:#1677FF;font-size:24rpx;text-decoration:underline">联系客服可协助退回 ›</text></view>
+      <view class="ri" wx:if="{{result.excessOver24<=0}}"><text class="rk">是否合法</text><text class="rv" style="color:#07c160">✅ 未超出24%法定上限</text></view>
+    </view>
+  </view>
+
+  <!-- 金融知识轮播 -->
+  <view class="sec"><text class="stt">金融知识</text>
+    <swiper class="swp" indicator-dots indicator-color="rgba(255,255,255,.4)" indicator-active-color="#fff" autoplay circular>
+      <swiper-item><view class="swc" style="background:#FF44BB">
+        <text class="swt">{{banner.title}}</text>
+        <text class="sws">{{banner.sub}}</text>
+        <text class="swb" wx:if="{{banner.body}}">{{banner.body}}</text>
+      </view></swiper-item>
+    </swiper>
+  </view>
+
+  <view class="bs"></view>
+  <view class="kf" bind:tap="onKfTap" hover-class="gh"><text class="kft">联系客服</text></view>
+</view>

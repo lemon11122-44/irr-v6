@@ -1,0 +1,182 @@
+<!DOCTYPE html><html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>IRR n6 管理</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,sans-serif}
+body{background:#f0f2f5;color:#222;font-size:14px}
+.hd{background:#1677FF;color:#fff;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
+.hd h1{font-size:17px}.hd a{color:rgba(255,255,255,.85);text-decoration:none;font-size:13px}
+.nv{display:flex;background:#fff;border-radius:10px;margin:16px auto;max-width:1000px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.nv a{flex:1;text-align:center;padding:12px 8px;text-decoration:none;color:#999;font-size:13px;border-bottom:3px solid transparent}
+.nv a.on{color:#1677FF;border-bottom-color:#1677FF;font-weight:600}
+.wr{max-width:1000px;margin:0 auto;padding:0 16px 20px}
+.cd{background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.cd h3{font-size:15px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center}
+.st{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.st .b{background:#fff;border-radius:12px;padding:20px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.st .n{font-size:28px;font-weight:700;color:#1677FF;display:block}
+.st .l{font-size:12px;color:#999;margin-top:4px;display:block}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 8px;color:#999;font-weight:500;border-bottom:2px solid #f0f0f0}
+td{padding:10px 8px;border-bottom:1px solid #f5f5f5;vertical-align:middle}
+tr:hover td{background:#f8f9fb}
+td[c]{cursor:text;padding:6px 8px;border:1px solid transparent}
+td[c]:focus{border-color:#1677FF;background:#fff;outline:none}
+input,textarea,select{width:100%;border:2px solid #eee;border-radius:8px;padding:10px 12px;font-size:13px;outline:none;background:#fff;color:#222}
+input:focus,textarea:focus,select:focus{border-color:#1677FF}
+textarea{min-height:70px;resize:vertical}
+.btn{display:inline-block;padding:8px 20px;background:#1677FF;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px}
+.btn:hover{background:#1366dd}
+.btn.c{background:#999}
+.btn.s{padding:5px 12px;font-size:12px;margin:0 2px}
+.btn.g{background:#e8f5e9;color:#2e7d32}.btn.g:hover{background:#c8e6c9}
+.btn.r{background:#ffebee;color:#c62828}.btn.r:hover{background:#ffcdd2}
+.act{white-space:nowrap}
+.mb{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:200;overflow-y:auto}
+.mw{max-width:500px;margin:50px auto;background:#fff;border-radius:14px;padding:28px}
+.mw h3{margin-bottom:16px;font-size:16px}
+.fl{margin-bottom:12px}
+.fl label{display:block;font-size:12px;color:#999;margin-bottom:4px}
+.btns{display:flex;gap:10px;margin-top:16px}
+.btns .btn{flex:1}
+.ts{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 24px;border-radius:8px;z-index:999;display:none}
+.av{width:32px;height:32px;border-radius:50%;object-fit:cover;vertical-align:middle}
+.ap{max-width:100px;max-height:100px;border-radius:8px;object-fit:cover;margin-top:6px}
+.lb{max-width:340px;margin:100px auto;background:#fff;border-radius:14px;padding:36px;box-shadow:0 2px 16px rgba(0,0,0,.08)}
+.lb h2{text-align:center;margin-bottom:20px;font-size:17px}
+.lb input{width:100%;margin-bottom:10px;font-size:14px}
+.lb .btn{width:100%}
+.er{color:#e53935;font-size:13px;text-align:center;margin:10px 0}
+</style></head><body>
+{% if tab == "login" %}
+<div class="wr"><div class="lb"><h2>🔐 IRR n6 管理</h2>
+<form method="post"><input name="username" placeholder="管理员账号" required autofocus>
+<input type="password" name="password" placeholder="登录密码" required>
+<button class="btn">登录</button>{% if err %}<div class="er">{{ err }}</div>{% endif %}</form></div></div>
+
+{% else %}
+<div class="hd"><h1>{% if tab=="dash" %}📊 概览{% elif tab=="plat" %}📋 平台管理{% elif tab=="know" %}📰 轮播文章{% elif tab=="svc" %}💬 客服管理{% elif tab=="cfg" %}⚙️ 系统配置{% endif %}</h1><a href="/adm/q">退出</a></div>
+<div class="wr"><div class="nv">
+<a href="/adm/p" class="{{'on' if tab=='dash'}}">概览</a>
+<a href="/adm/plat" class="{{'on' if tab=='plat'}}">平台管理</a>
+<a href="/adm/know" class="{{'on' if tab=='know'}}">轮播文章</a>
+<a href="/adm/cfg" class="{{'on' if tab=='cfg'}}">系统配置</a>
+</div>
+
+{% if tab == "dash" %}
+<div class="st" id="sb"></div>
+<div class="cd"><h3>快捷入口</h3>
+<a href="/adm/plat" class="btn" style="margin-right:8px">📋 平台管理</a>
+<a href="/adm/svc" class="btn" style="margin-right:8px">💬 客服管理</a>
+<a href="/adm/know" class="btn" style="margin-right:8px">📰 轮播文章</a>
+<a href="/adm/cfg" class="btn">⚙️ 系统配置</a></div>
+<script>
+fetch('/n6/st').then(r=>r.json()).then(d=>{
+  document.getElementById('sb').innerHTML='<div class="b"><span class="n">'+d.p+'</span><span class="l">退费平台</span></div><div class="b"><span class="n">'+d.k+'</span><span class="l">轮播文章</span></div><div class="b"><span class="n">'+d.s+'</span><span class="l">客服数量</span></div><div class="b"><span class="n">'+d.c+'</span><span class="l">配置项</span></div>'
+})
+</script>
+
+{% elif tab == "plat" %}
+<div class="cd"><h3>平台列表 <button class="btn" onclick="moP()">+ 添加平台</button></h3>
+<table><thead><tr><th>ID</th><th>名称</th><th>分类</th><th>图标</th><th>简介</th><th style="width:120px">操作</th></tr></thead><tbody id="tp"></tbody></table></div>
+<div class="cd"><h3>💬 客服管理 <button class="btn" onclick="moS()">+ 添加客服</button></h3>
+<table><thead><tr><th>ID</th><th>头像</th><th>昵称</th><th>电话</th><th>在线</th><th style="width:120px">操作</th></tr></thead><tbody id="ts"></tbody></table></div>
+<script>
+function $(i){return document.getElementById(i)}
+function es(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;')}
+function md(t,b){$('mw').innerHTML='<h3>'+t+'</h3>'+b;$('mb').style.display='block'}
+function cm(){$('mb').style.display='none'}
+function ts(m,e){const t=$('ts1');t.textContent=m;t.style.background=e?'#c62828':'#333';t.style.display='block';setTimeout(()=>t.style.display='none',2000)}
+function ui(inp,pid){
+  const f=inp.files[0];if(!f)return
+  const fd=new FormData();fd.append('f',f)
+  fetch('/n6/up',{method:'POST',body:fd}).then(r=>r.json()).then(d=>{$(pid).innerHTML='<img src="'+d.url+'" class="ap">';$(pid).dataset.u=d.url;ts('✅ 图片已上传')})
+}
+// plats
+function ldP(){fetch('/n6/ps').then(r=>r.json()).then(ls=>{$('tp').innerHTML=ls.map(p=>'<tr><td>'+p.id+'</td>'+
+  '<td c onblur="pp('+p.id+',\'nm\',this.textContent)">'+es(p.nm)+'</td>'+
+  '<td c onblur="pp('+p.id+',\'tp\',this.textContent)">'+es(p.tp)+'</td>'+
+  '<td>'+(p.ic?'<img src="'+p.ic+'" class="av">':'—')+'</td>'+
+  '<td c onblur="pp('+p.id+',\'ds\',this.textContent)">'+es(p.ds||'')+'</td>'+
+  '<td class="act"><button class="btn s g" onclick="edP('+p.id+',\''+es(p.nm)+'\',\''+es(p.tp)+'\',\''+es(p.ds||'')+'\')">编辑</button>'+
+  '<button class="btn s r" onclick="dlP('+p.id+')">删除</button></td></tr>').join('')})}
+function pp(id,k,v){fetch('/n6/ps/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({[k]:v})}).then(r=>r.json()).then(d=>{if(d.ok)ts('✅ 已更新');sy()})}
+function dlP(id){if(!confirm('确认删除？'))return;fetch('/n6/ps/'+id,{method:'DELETE'}).then(r=>r.json()).then(d=>{if(d.ok){ts('✅ 已删除');sy();ldP()}})}
+function moP(){md('添加平台','<div class="fl"><label>名称 *</label><input id="apn"></div>'+
+  '<div class="fl"><label>分类</label><select id="apt"><option>互联网信贷</option><option>银行</option><option>消费金融</option><option>网贷</option><option>其他</option></select></div>'+
+  '<div class="fl"><label>图标上传</label><input type="file" accept="image/*" onchange="ui(this,\'apl\')"><div id="apl"></div></div>'+
+  '<div class="fl"><label>简介</label><textarea id="apd"></textarea></div>'+
+  '<div class="btns"><button class="btn" onclick="svP()">提交</button><button class="btn c" onclick="cm()">取消</button></div>')}
+function svP(){fetch('/n6/ps',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nm:$('apn').value,tp:$('apt').value,ic:$('apl').dataset.u||'',ds:$('apd').value})}).then(r=>r.json()).then(d=>{if(d.ok){ts('✅ 添加成功');sy();cm();ldP()}})}
+function edP(id,n,t,d){md('编辑平台','<div class="fl"><label>名称</label><input id="epn" value="'+es(n)+'"></div>'+
+  '<div class="fl"><label>分类</label><select id="ept"><option'+(t=='互联网信贷'?' selected':'')+'>互联网信贷</option><option'+(t=='银行'?' selected':'')+'>银行</option><option'+(t=='消费金融'?' selected':'')+'>消费金融</option><option'+(t=='网贷'?' selected':'')+'>网贷</option><option'+(t=='其他'?' selected':'')+'>其他</option></select></div>'+
+  '<div class="fl"><label>图标</label><input type="file" accept="image/*" onchange="ui(this,\'epl\')"><div id="epl"></div></div>'+
+  '<div class="fl"><label>简介</label><textarea id="epd">'+es(d)+'</textarea></div>'+
+  '<div class="btns"><button class="btn" onclick="svEP('+id+')">保存</button><button class="btn c" onclick="cm()">取消</button></div>')}
+function svEP(id){fetch('/n6/ps/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({nm:$('epn').value,tp:$('ept').value,ic:$('epl').dataset.u||'',ds:$('epd').value})}).then(r=>r.json()).then(d=>{if(d.ok){ts('✅ 保存成功');sy();cm();ldP()}})}
+// svcs
+function ldS(){fetch('/n6/sv').then(r=>r.json()).then(ls=>{$('ts').innerHTML=ls.map(s=>'<tr><td>'+s.id+'</td>'+
+  '<td>'+(s.av?'<img src="'+s.av+'" class="av">':'—')+'</td>'+
+  '<td c onblur="sp('+s.id+',\'nn\',this.textContent)">'+es(s.nn)+'</td>'+
+  '<td c onblur="sp('+s.id+',\'ph\',this.textContent)">'+es(s.ph)+'</td>'+
+  '<td c onblur="sp('+s.id+',\'wx\',this.textContent)">'+es(s.wx||'')+'</td>'+
+  '<td c onblur="sp('+s.id+',\'ol\',this.textContent==\'在线\'?true:false)">'+(s.ol?'🟢 在线':'🔴 离线')+'</td>'+
+  '<td class="act"><button class="btn s g" onclick="edS('+s.id+',\''+es(s.nn)+'\',\''+es(s.ph)+'\',\''+es(s.wx||'')+'\','+s.ol+',\''+es(s.av)+'\')">编辑</button>'+
+  '<button class="btn s r" onclick="dlS('+s.id+')">删除</button></td></tr>').join('')})}
+function sp(id,k,v){fetch('/n6/sv/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({[k]:v})}).then(r=>r.json()).then(d=>{if(d.ok)ts('✅ 已更新');sy()})}
+function dlS(id){if(!confirm('确认删除？'))return;fetch('/n6/sv/'+id,{method:'DELETE'}).then(r=>r.json()).then(d=>{if(d.ok){ts('✅ 已删除');sy();ldS()}})}
+function moS(){md('添加客服','<div class="fl"><label>昵称 *</label><input id="asn"></div>'+
+  '<div class="fl"><label>电话</label><input id="asp"></div>'+
+  '<div class="fl"><label>微信号</label><input id="asw"></div>'+
+  '<div class="fl"><label>头像上传</label><input type="file" accept="image/*" onchange="ui(this,\'asa\')"><div id="asa"></div></div>'+
+  '<div class="fl"><label>在线</label><select id="aso"><option>在线</option><option>离线</option></select></div>'+
+  '<div class="btns"><button class="btn" onclick="svS()">提交</button><button class="btn c" onclick="cm()">取消</button></div>')}
+function svS(){fetch('/n6/sv',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nn:$('asn').value,ph:$('asp').value,wx:$('asw').value,av:$('asa').dataset.u||'',ol:$('aso').value=='在线'})}).then(r=>r.json()).then(d=>{if(d.ok){ts('✅ 添加成功');sy();cm();ldS()}})}
+function edS(id,n,p,w,on,av){md('编辑客服','<div class="fl"><label>昵称</label><input id="esn" value="'+es(n)+'"></div>'+
+  '<div class="fl"><label>电话</label><input id="esp" value="'+es(p)+'"></div>'+
+  '<div class="fl"><label>微信号</label><input id="esw" value="'+es(w)+'"></div>'+
+  '<div class="fl"><label>头像</label><input type="file" accept="image/*" onchange="ui(this,\'esa\')"><div id="esa">'+(av?'<img src="'+av+'" class="ap">':'')+'</div></div>'+
+  '<div class="fl"><label>在线</label><select id="eso"><option'+(on?' selected':'')+'>在线</option><option'+(on?'':' selected')+'>离线</option></select></div>'+
+  '<div class="btns"><button class="btn" onclick="svES('+id+')">保存</button><button class="btn c" onclick="cm()">取消</button></div>')}
+function svES(id){fetch('/n6/sv/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({nn:$('esn').value,ph:$('esp').value,wx:$('esw').value,av:$('esa').dataset.u||'',ol:$('eso').value=='在线'})}).then(r=>r.json()).then(d=>{if(d.ok){ts('✅ 保存成功');sy();cm();ldS()}})}
+ldP();ldS()
+</script>
+
+{% elif tab == "know" %}
+<div class="cd"><h3>轮播文章 <button class="btn" onclick="moK()">+ 添加文章</button></h3>
+<table><thead><tr><th>ID</th><th>标题</th><th>副标题</th><th>按钮</th><th>背景</th><th>操作</th></tr></thead><tbody id="tk"></tbody></table></div>
+<script>
+fetch('/n6/ks').then(r=>r.json()).then(ls=>{$('tk').innerHTML=ls.map(a=>'<tr><td>'+a.id+'</td>'+
+  '<td c onblur="kp('+a.id+',\'tl\',this.textContent)">'+es(a.tl)+'</td>'+
+  '<td c onblur="kp('+a.id+',\'sb\',this.textContent)">'+es(a.sb)+'</td>'+
+  '<td c onblur="kp('+a.id+',\'bt\',this.textContent)">'+es(a.bt)+'</td>'+
+  '<td><span style="display:inline-block;width:18px;height:18px;background:'+a.bg+';border-radius:4px;vertical-align:middle;margin-right:4px"></span>'+a.bg+'</td>'+
+  '<td class="act"><button class="btn s r" onclick="dlK('+a.id+')">删除</button></td></tr>').join('')})
+function kp(id,k,v){fetch('/n6/ks/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({[k]:v})}).then(r=>r.json()).then(d=>{if(d.ok)ts('✅ 已更新');sy()})}
+function dlK(id){if(!confirm('确认删除？'))return;fetch('/n6/ks/'+id,{method:'DELETE'}).then(r=>r.json()).then(d=>{if(d.ok){ts('✅ 已删除');sy();location.reload()}})}
+function moK(){md('添加文章','<div class="fl"><label>标题</label><input id="akt"></div><div class="fl"><label>副标题</label><input id="aks"></div><div class="fl"><label>正文（支持分段）</label><textarea id="akb" style="min-height:80px"></textarea></div><div class="fl"><label>背景色</label><input id="akg" value="#FF44BB"></div><div class="btns"><button class="btn" onclick="svK()">提交</button><button class="btn c" onclick="cm()">取消</button></div>')}
+function svK(){fetch('/n6/ks',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tl:$('akt').value,sb:$('aks').value,bd:$('akb').value,bg:$('akg').value})}).then(r=>r.json()).then(d=>{if(d.ok){ts('✅ 添加成功');sy();cm();location.reload()}})}
+</script>
+
+{% elif tab == "cfg" %}
+<div class="cd"><h3>系统配置</h3>
+<div class="fl" style="max-width:500px"><label>轮播大标题</label><input id="ct"></div>
+<div class="fl" style="max-width:500px"><label>轮播副标题</label><input id="cs"></div>
+<div class="fl" style="max-width:500px"><label>轮播正文（支持分段换行）</label><textarea id="cb" style="min-height:120px" placeholder="每行一段，空行分段"></textarea></div>
+<button class="btn" onclick="svC()">保存配置</button><div id="cmg" style="margin-top:10px"></div></div>
+<script>
+fetch('/n6/cg').then(r=>r.json()).then(d=>{$('ct').value=d.bn_t||'';$('cs').value=d.bn_s||'';$('cb').value=d.bn_body||''})
+function svC(){fetch('/n6/cg',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({bn_t:$('ct').value,bn_s:$('cs').value,bn_body:$('cb').value})}).then(r=>r.json()).then(d=>{$('cmg').innerHTML='<span style="color:#07c160">✅ 保存成功</span>'})}
+</script>
+{% endif %}
+</div>{% endif %}
+
+<div class="mb" id="mb" onclick="if(event.target==this)cm()"><div class="mw" id="mw"></div></div>
+<div class="ts" id="ts1"></div>
+<script>
+function $(i){return document.getElementById(i)}
+function ts(m,e){const t=$('ts1');t.textContent=m;t.style.background=e?'#c62828':'#333';t.style.display='block';setTimeout(()=>t.style.display='none',2000)}
+function cm(){$('mb').style.display='none'}
+function md(t,b){$('mw').innerHTML='<h3>'+t+'</h3>'+b;$('mb').style.display='block'}
+function sy(){fetch('/n6/sync')}
+</script>
+</body></html>
