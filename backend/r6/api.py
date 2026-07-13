@@ -8,7 +8,7 @@ import os, uuid, json
 MINI_DATA = os.path.join(os.path.dirname(__file__), "..", "..", "mini", "data")
 
 rt = APIRouter(prefix="/n6", tags=["n6"])
-HOST = "http://127.0.0.1"
+HOST = "https://irr-v6-backend-280065-9-1452195104.sh.run.tcloudbase.com"
 D = os.path.join(os.path.dirname(__file__), "..", "up6")
 os.makedirs(D, exist_ok=True)
 

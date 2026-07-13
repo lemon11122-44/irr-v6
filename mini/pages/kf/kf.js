@@ -1,10 +1,27 @@
-const DATA = require('../../data/kf_data')
+const CFG = require('../../utils/config')
+const API = CFG.API_BASE
 
 Page({
   data: { services: [], loading: true },
 
   onLoad() {
-    this.setData({ services: DATA, loading: false })
+    wx.request({
+      url: API + '/n6/sv',
+      success: r => {
+        if (r.data && r.data.length) {
+          this.setData({ services: r.data.map(s => ({...s, av: s.av || ''})), loading: false })
+        }
+      },
+      fail: () => {
+        // 开发环境回退到本地数据
+        try {
+          const DATA = require('../../data/kf_data')
+          this.setData({ services: DATA, loading: false })
+        } catch(e) {
+          this.setData({ loading: false })
+        }
+      }
+    })
   },
 
   onCall(e) {

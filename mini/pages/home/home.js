@@ -1,5 +1,5 @@
 const IRR = require('../../lib/irr')
-const BANNER = require('../../data/banner_data')
+const CFG = require('../../utils/config')
 
 Page({
   data: {
@@ -8,10 +8,26 @@ Page({
     principal: '', inputVal: '', months: '',
     result: null, showResult: false,
     modeNames: { debx: '等额本息', debj: '等额本金' },
-    banner: { title: BANNER.title, sub: BANNER.sub, body: BANNER.body }
+    banner: { title: 'IRR真实年化怎么算？', sub: '网贷隐藏费用计入真实成本', body: '' }
   },
 
   onLoad() {
+    // 尝试从云端获取轮播配置
+    wx.request({
+      url: CFG.API_BASE + '/n6/cg',
+      success: r => {
+        const d = r.data
+        if (d.bn_t || d.bn_s) {
+          this.setData({ banner: { title: d.bn_t || '', sub: d.bn_s || '', body: d.bn_body || '' } })
+        }
+      },
+      fail: () => {
+        try {
+          const B = require('../../data/banner_data')
+          this.setData({ banner: { title: B.title, sub: B.sub, body: B.body } })
+        } catch(e) {}
+      }
+    })
   },
 
   onInput(e) {
