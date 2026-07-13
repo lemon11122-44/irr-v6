@@ -4,11 +4,11 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # 安装依赖
-COPY requirements.txt .
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 拷贝源码
-COPY . .
+# 拷贝后端源码
+COPY backend/ .
 
 # 创建上传目录
 RUN mkdir -p up6
