@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+cert/
+up6/
+n6.db
