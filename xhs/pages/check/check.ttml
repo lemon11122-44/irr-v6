@@ -1,4 +1,3 @@
-<navigation-bar title="扣费自查" color="white" background="#1677FF" />
 <scroll-view class="pg" scroll-y>
   <view class="h-tip">选择你的借款平台进行自查</view>
   <view class="item" tt:for="{{list}}" tt:key="id">

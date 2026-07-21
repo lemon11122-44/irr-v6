@@ -8,6 +8,6 @@
   },
   "appid": "请填写小红书appid",
   "compileType": "miniprogram",
-  "libVersion": "latest",
+  "libVersion": "2.0.0",
   "projectname": "IRR利率计算器"
 }

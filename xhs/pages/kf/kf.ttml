@@ -1,4 +1,3 @@
-<navigation-bar title="联系客服" color="black" background="#fff" />
 <scroll-view class="pg" scroll-y>
   <view class="ld" tt:if="{{loading}}"><text>加载中...</text></view>
 
