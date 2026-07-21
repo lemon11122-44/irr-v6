@@ -1,0 +1,34 @@
+<navigation-bar title="联系客服" color="black" background="#fff" />
+<scroll-view class="pg" scroll-y>
+  <view class="ld" tt:if="{{loading}}"><text>加载中...</text></view>
+
+  <view class="emp" tt:if="{{!loading && services.length==0}}">
+    <text class="emp-i">💬</text>
+    <text class="emp-t">暂无客服在线</text>
+  </view>
+
+  <view class="svc" tt:for="{{services}}" tt:key="id">
+    <view class="card">
+      <view class="top">
+        <image class="av" src="{{item.av}}" tt:if="{{item.av}}" mode="aspectFill" />
+        <view class="av-pl" tt:else><text>{{item.nn ? item.nn.charAt(0) : '客'}}</text></view>
+        <view class="info">
+          <text class="nm">{{item.nn}}</text>
+          <text class="sts {{item.ol?'on':'off'}}">{{item.ol?'🟢 在线':'🔴 离线'}}</text>
+        </view>
+      </view>
+      <view class="acts">
+        <view class="act" tt:if="{{item.ph}}" data-phone="{{item.ph}}" bind:tap="onCall">
+          <text class="act-i">📞</text>
+          <text class="act-t">{{item.ph}}</text>
+          <text class="act-ar">拨打</text>
+        </view>
+        <view class="act" tt:if="{{item.wx}}" data-text="{{item.wx}}" bind:tap="onCopy">
+          <text class="act-i">💬</text>
+          <text class="act-t">{{item.wx}}</text>
+          <text class="act-ar">复制</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

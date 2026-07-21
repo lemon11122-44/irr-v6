@@ -1,0 +1,13 @@
+{
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "enhance": true
+  },
+  "appid": "请填写小红书appid",
+  "compileType": "miniprogram",
+  "libVersion": "latest",
+  "projectname": "IRR利率计算器"
+}

@@ -1,0 +1,9 @@
+.h-tip { font-size: 26rpx; color: #999; margin-bottom: 20rpx; }
+.item { display: flex; align-items: center; background: #fff; border-radius: 12rpx; padding: 24rpx; margin-bottom: 16rpx; }
+.ic { width: 80rpx; height: 80rpx; border-radius: 16rpx; }
+.ic-pl { width: 80rpx; height: 80rpx; border-radius: 16rpx; background: #1677FF; display: flex; align-items: center; justify-content: center; }
+.ic-pl text { color: #fff; font-size: 32rpx; font-weight: 600; }
+.info { flex: 1; margin-left: 20rpx; }
+.nm { font-size: 30rpx; font-weight: 500; color: #333; display: block; }
+.tp { font-size: 24rpx; color: #999; margin-top: 6rpx; display: block; }
+.emp { text-align: center; padding: 100rpx 0; color: #999; }

@@ -1,0 +1,15 @@
+<navigation-bar title="扣费自查" color="white" background="#1677FF" />
+<scroll-view class="pg" scroll-y>
+  <view class="h-tip">选择你的借款平台进行自查</view>
+  <view class="item" tt:for="{{list}}" tt:key="id">
+    <image class="ic" src="{{item.ic}}" tt:if="{{item.ic}}" mode="aspectFill" />
+    <view class="ic-pl" tt:else><text>{{item.nm.charAt(0)}}</text></view>
+    <view class="info">
+      <text class="nm">{{item.nm}}</text>
+      <text class="tp">{{item.tp}}</text>
+    </view>
+  </view>
+  <view class="emp" tt:if="{{list.length==0}}">
+    <text>暂无数据</text>
+  </view>
+</scroll-view>
