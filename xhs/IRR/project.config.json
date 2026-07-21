@@ -16,6 +16,6 @@
     "tabIndent": "auto",
     "tabSize": 2
   },
-  "appid": "请填写小红书appid",
-  "projectName": "IRR利率计算器"
+  "appid": "touristAppId",
+  "projectName": "IRR"
 }

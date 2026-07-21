@@ -1,14 +1,14 @@
 <scroll-view class="pg" scroll-y>
   <view class="h-tip">选择你的借款平台进行自查</view>
-  <view class="item" tt:for="{{list}}" tt:key="id">
-    <image class="ic" src="{{item.ic}}" tt:if="{{item.ic}}" mode="aspectFill" />
-    <view class="ic-pl" tt:else><text>{{item.nm.charAt(0)}}</text></view>
+  <view class="item" xhs:for="{{list}}" xhs:key="id">
+    <image class="ic" src="{{item.ic}}" xhs:if="{{item.ic}}" mode="aspectFill" />
+    <view class="ic-pl" xhs:else><text>{{item.nm.charAt(0)}}</text></view>
     <view class="info">
       <text class="nm">{{item.nm}}</text>
       <text class="tp">{{item.tp}}</text>
     </view>
   </view>
-  <view class="emp" tt:if="{{list.length==0}}">
+  <view class="emp" xhs:if="{{list.length==0}}">
     <text>暂无数据</text>
   </view>
 </scroll-view>
