@@ -1,36 +1,8 @@
 {
-  "pages": ["pages/home/home", "pages/check/check", "pages/kf/kf"],
+  "pages": ["pages/home/home"],
   "window": {
-    "navigationBarTitleText": "IRR真实利率计算器",
-    "navigationBarBackgroundColor": "#1677FF",
-    "navigationBarTextStyle": "white",
-    "backgroundColor": "#f5f5f5"
-  },
-  "tabBar": {
-    "color": "#999",
-    "selectedColor": "#1677FF",
-    "backgroundColor": "#fff",
-    "borderStyle": "black",
-    "list": [
-      {
-        "pagePath": "pages/home/home",
-        "iconPath": "imgs/h.png",
-        "selectedIconPath": "imgs/ha.png",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/check/check",
-        "iconPath": "imgs/c.png",
-        "selectedIconPath": "imgs/ca.png",
-        "text": "扣费自查"
-      }
-    ]
-  },
-  "style": "v2",
-  "componentFramework": "glass-easel",
-  "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents",
-  "networkTimeout": {
-    "request": 10000
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "IRR计算器",
+    "navigationBarBackgroundColor": "#ffffff"
   }
 }
