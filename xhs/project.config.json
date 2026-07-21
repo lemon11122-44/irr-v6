@@ -1,11 +1,21 @@
 {
   "compileType": "miniprogram",
   "libVersion": "3.133.1",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
   "setting": {
     "minified": true,
-    "urlCheck": true,
+    "urlCheck": false,
+    "useNewDevtools": false,
     "useNewCompiler": true
   },
-  "appid": "touristAppId",
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "auto",
+    "tabSize": 2
+  },
+  "appid": "6a5fa6f8f7262f00010e172a",
   "projectName": "IRR计算器"
 }
