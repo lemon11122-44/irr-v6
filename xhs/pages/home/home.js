@@ -13,7 +13,7 @@ Page({
 
   onLoad() {
     // 尝试从云端获取轮播配置
-    tt.request({
+    xhs.request({
       url: CFG.API_BASE + '/n6/cg',
       success: r => {
         const d = r.data
@@ -54,7 +54,7 @@ Page({
       total = parseFloat(inputVal)
     }
     if (!p || !total || !m) {
-      tt.showToast({ title: '请完整填写信息', icon: 'none' })
+      xhs.showToast({ title: '请完整填写信息', icon: 'none' })
       return
     }
     let r, detail
@@ -76,5 +76,5 @@ Page({
     this.setData({ result: { rate: r.rate, totalInterest: r.totalInterest, monthly: r.monthly, detail, over24, refund, exceeds: r.rate > threshold }, showResult: true })
   },
 
-  onKfTap() { tt.navigateTo({ url: '/pages/kf/kf' }) }
+  onKfTap() { xhs.navigateTo({ url: '/pages/kf/kf' }) }
 })

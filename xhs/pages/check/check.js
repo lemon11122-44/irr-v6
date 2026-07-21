@@ -4,7 +4,7 @@ Page({
   data: { list: [] },
 
   onShow() {
-    tt.request({
+    xhs.request({
       url: CFG.API_BASE + '/n6/ps',
       success: r => {
         if (r.data && r.data.length) {

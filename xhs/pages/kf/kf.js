@@ -4,7 +4,7 @@ Page({
   data: { services: [], loading: true },
 
   onLoad() {
-    tt.request({
+    xhs.request({
       url: CFG.API_BASE + '/n6/sv',
       success: r => {
         if (r.data && r.data.length) {
@@ -24,13 +24,13 @@ Page({
 
   onCall(e) {
     const ph = e.currentTarget.dataset.phone
-    if (ph) tt.makePhoneCall({ phoneNumber: ph })
+    if (ph) xhs.makePhoneCall({ phoneNumber: ph })
   },
 
   onCopy(e) {
     const txt = e.currentTarget.dataset.text
     if (txt) {
-      tt.setClipboardData({ data: txt, success: () => tt.showToast({ title: '已复制', icon: 'success' }) })
+      xhs.setClipboardData({ data: txt, success: () => xhs.showToast({ title: '已复制', icon: 'success' }) })
     }
   }
 })
